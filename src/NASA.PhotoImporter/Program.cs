@@ -13,7 +13,7 @@ namespace NASA.PhotoImporter
 
         public static void Main(string[] args)
         {
-            var showHelp = false;
+            var showHelp = true;
             string outputPath = null;
             string inputFile = null;
             string apiKey = null;
@@ -56,15 +56,15 @@ namespace NASA.PhotoImporter
                 return;
             }
 
-            Console.WriteLine("Options:");
+            Console.WriteLine("Import complete:");
             Console.WriteLine("\tInput File: {0}", inputFile);
             Console.WriteLine("\tOutput Folder: {0}", outputPath);
         }
 
         private static void ShowHelp(OptionSet p)
         {
-            Console.WriteLine("Usage: importer [OPTIONS]+");
-            Console.WriteLine("Program to import MARs rover images to a local folder.");
+            Console.WriteLine("Usage: NASA.PhotoImporter.dll [OPTIONS]+");
+            Console.WriteLine("Import MARs rover photos to a local folder.");
             Console.WriteLine();
             Console.WriteLine("Options:");
             p.WriteOptionDescriptions(Console.Out);

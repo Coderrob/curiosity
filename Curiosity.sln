@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{51C97B59
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NASA.PhotoImporter", "src\NASA.PhotoImporter\NASA.PhotoImporter.csproj", "{F4A466F5-692C-48EF-A456-EF7FC4DFAE5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NASA.PhotoImporter.Tests", "src\NASA.PhotoImporter.Tests\NASA.PhotoImporter.Tests.csproj", "{4404ACA6-B7ED-4429-8361-E33298A04EE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NASA.PhotoImporter.Tests", "src\NASA.PhotoImporter.Tests\NASA.PhotoImporter.Tests.csproj", "{4404ACA6-B7ED-4429-8361-E33298A04EE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NASA.Web", "src\NASA.Web\NASA.Web.csproj", "{291F3EB8-3012-42AB-B036-1E7A79E9B530}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{4404ACA6-B7ED-4429-8361-E33298A04EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4404ACA6-B7ED-4429-8361-E33298A04EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4404ACA6-B7ED-4429-8361-E33298A04EE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{291F3EB8-3012-42AB-B036-1E7A79E9B530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{291F3EB8-3012-42AB-B036-1E7A79E9B530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{291F3EB8-3012-42AB-B036-1E7A79E9B530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{291F3EB8-3012-42AB-B036-1E7A79E9B530}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{E6B66395-8C16-40DA-A562-518914722129} = {51C97B59-D7D5-4161-AFC8-EC659B9EB74C}
 		{F4A466F5-692C-48EF-A456-EF7FC4DFAE5E} = {923C253F-0628-4895-A1D3-E1AA4F900713}
 		{4404ACA6-B7ED-4429-8361-E33298A04EE0} = {51C97B59-D7D5-4161-AFC8-EC659B9EB74C}
+		{291F3EB8-3012-42AB-B036-1E7A79E9B530} = {923C253F-0628-4895-A1D3-E1AA4F900713}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9AD9499C-8641-480D-BEDF-D0ECBAC5DBC1}
