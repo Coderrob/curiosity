@@ -1,83 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
 using NASA.Api.Cameras;
-using NASA.Api.Rovers;
 using NASA.Api.Utilities;
 using Xunit;
 
-namespace NASA.Api.Tests
+namespace NASA.Api.Tests.Cameras
 {
-    public class SpiritRoverTests
+    public class RearHazardAvoidanceCameraTests
     {
+        private readonly RearHazardAvoidanceCamera _camera;
         private readonly Mock<IRequestBuilder> _requestBuilderMock;
-        private readonly Spirit _rover;
 
-        public SpiritRoverTests()
+        public RearHazardAvoidanceCameraTests()
         {
             _requestBuilderMock = new Mock<IRequestBuilder>();
 
             _requestBuilderMock
-                    .Setup(m => m.AddPath("Spirit"))
+                    .Setup(m => m.AddQueryParameter("camera", It.IsAny<string>()))
                     .Returns(_requestBuilderMock.Object);
 
-            _requestBuilderMock
-                    .Setup(m => m.Clone())
-                    .Returns(_requestBuilderMock.Object);
-
-            _rover = new Spirit(_requestBuilderMock.Object);
+            _camera = new RearHazardAvoidanceCamera(_requestBuilderMock.Object);
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void HasName()
         {
-            Assert.Equal("Spirit", _rover.Name);
+            Assert.Equal("Rear Hazard Avoidance Camera", _camera.Name);
         }
 
         [Fact]
         [Trait("Category", "Unit")]
-        public void HasCameras()
+        public void HasAbbreviation()
         {
-            Assert.NotEmpty(_rover.GetCameras());
-        }
-
-        [Fact]
-        [Trait("Category", "Unit")]
-        public void HasExpectedCameras()
-        {
-            var cameras = _rover.GetCameras();
-
-            var knownCameras = new[] { "FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES" };
-
-            Assert.True(!knownCameras.Except(cameras.Select(c => c.Abbreviation)).Any());
-        }
-
-        [Fact]
-        [Trait("Category", "Unit")]
-        public void HasNoUnexpectedCameras()
-        {
-            var cameras = _rover.GetCameras();
-
-            var knownCameras = new[] { "MAST", "CHEMCAM", "MAHLI", "MARDI" };
-
-            Assert.True(knownCameras.Except(cameras.Select(c => c.Abbreviation)).Any());
-        }
-
-        [Fact]
-        [Trait("Category", "Unit")]
-        public void GetCameraReturnsNullCameraIfUnknown()
-        {
-            Assert.IsType<NullCamera>(_rover.GetCamera("MAST"));
-        }
-
-        [Fact]
-        [Trait("Category", "Unit")]
-        public void GetCameraReturnsKnownCamera()
-        {
-            Assert.IsType<NavigationCamera>(_rover.GetCamera("NAVCAM"));
+            Assert.Equal("RHAZ", _camera.Abbreviation);
         }
 
         [Fact]
@@ -96,7 +53,7 @@ namespace NASA.Api.Tests
                     .Setup(m => m.MakeRequest<PhotosResponse>())
                     .ReturnsAsync((PhotosResponse) null);
 
-            Assert.Empty(await _rover.GetPhotosAsync());
+            Assert.Empty(await _camera.GetPhotosAsync());
         }
 
         [Fact]
@@ -115,7 +72,7 @@ namespace NASA.Api.Tests
                     .Setup(m => m.MakeRequest<PhotosResponse>())
                     .ReturnsAsync(new PhotosResponse());
 
-            Assert.Empty(await _rover.GetPhotosAsync());
+            Assert.Empty(await _camera.GetPhotosAsync());
         }
 
         [Fact]
@@ -137,18 +94,7 @@ namespace NASA.Api.Tests
                         Photos = new List<Photo> { new Photo() }
                     });
 
-            Assert.Single(await _rover.GetPhotosAsync());
-        }
-
-        //[Fact]
-        [Trait("Category", "Integration")]
-        public async Task GetPhotos()
-        {
-            var client = new RoverClient();
-            var rovers = client.GetRovers();
-            var rover = rovers.First(r => string.Equals(r.Name, "Spirit"));
-            var photos = await rover.GetPhotosAsync(new DateTime(2015, 6, 3));
-            Assert.NotEmpty(photos);
+            Assert.Single(await _camera.GetPhotosAsync());
         }
     }
 }

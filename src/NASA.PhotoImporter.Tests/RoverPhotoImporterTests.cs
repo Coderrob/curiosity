@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Moq;
 using NASA.Api;
 using NASA.Api.Rovers;
+using NASA.PhotoImporter.Importers;
 using Xunit;
 
 namespace NASA.PhotoImporter.Tests

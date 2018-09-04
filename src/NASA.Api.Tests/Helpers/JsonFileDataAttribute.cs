@@ -5,7 +5,7 @@ using System.Reflection;
 using Newtonsoft.Json.Linq;
 using Xunit.Sdk;
 
-namespace NASA.Api.Tests
+namespace NASA.Api.Tests.Helpers
 {
     /// <inheritdoc />
     /// <summary>

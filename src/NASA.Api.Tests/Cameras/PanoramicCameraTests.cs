@@ -5,14 +5,14 @@ using NASA.Api.Cameras;
 using NASA.Api.Utilities;
 using Xunit;
 
-namespace NASA.Api.Tests
+namespace NASA.Api.Tests.Cameras
 {
-    public class NavigationCameraTests
+    public class PanoramicCameraTests
     {
-        private readonly NavigationCamera _camera;
+        private readonly PanoramicCamera _camera;
         private readonly Mock<IRequestBuilder> _requestBuilderMock;
 
-        public NavigationCameraTests()
+        public PanoramicCameraTests()
         {
             _requestBuilderMock = new Mock<IRequestBuilder>();
 
@@ -20,21 +20,21 @@ namespace NASA.Api.Tests
                     .Setup(m => m.AddQueryParameter("camera", It.IsAny<string>()))
                     .Returns(_requestBuilderMock.Object);
 
-            _camera = new NavigationCamera(_requestBuilderMock.Object);
+            _camera = new PanoramicCamera(_requestBuilderMock.Object);
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void HasName()
         {
-            Assert.Equal("Navigation Camera", _camera.Name);
+            Assert.Equal("Panoramic Camera", _camera.Name);
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void HasAbbreviation()
         {
-            Assert.Equal("NAVCAM", _camera.Abbreviation);
+            Assert.Equal("PANCAM", _camera.Abbreviation);
         }
 
         [Fact]

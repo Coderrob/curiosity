@@ -5,14 +5,14 @@ using NASA.Api.Cameras;
 using NASA.Api.Utilities;
 using Xunit;
 
-namespace NASA.Api.Tests
+namespace NASA.Api.Tests.Cameras
 {
-    public class FrontHazardAvoidanceCameraTests
+    public class MarsHandLensImagerTests
     {
-        private readonly FrontHazardAvoidanceCamera _camera;
+        private readonly MarsHandLensImager _camera;
         private readonly Mock<IRequestBuilder> _requestBuilderMock;
 
-        public FrontHazardAvoidanceCameraTests()
+        public MarsHandLensImagerTests()
         {
             _requestBuilderMock = new Mock<IRequestBuilder>();
 
@@ -20,21 +20,21 @@ namespace NASA.Api.Tests
                     .Setup(m => m.AddQueryParameter("camera", It.IsAny<string>()))
                     .Returns(_requestBuilderMock.Object);
 
-            _camera = new FrontHazardAvoidanceCamera(_requestBuilderMock.Object);
+            _camera = new MarsHandLensImager(_requestBuilderMock.Object);
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void HasName()
         {
-            Assert.Equal("Front Hazard Avoidance Camera", _camera.Name);
+            Assert.Equal("Mars Hand Lens Imager", _camera.Name);
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void HasAbbreviation()
         {
-            Assert.Equal("FHAZ", _camera.Abbreviation);
+            Assert.Equal("MAHLI", _camera.Abbreviation);
         }
 
         [Fact]

@@ -5,14 +5,14 @@ using NASA.Api.Cameras;
 using NASA.Api.Utilities;
 using Xunit;
 
-namespace NASA.Api.Tests
+namespace NASA.Api.Tests.Cameras
 {
-    public class MarsDescentImagerTests
+    public class MiniatureThermalEmissionSpectrometerTests
     {
-        private readonly MarsDescentImager _camera;
+        private readonly MiniatureThermalEmissionSpectrometer _camera;
         private readonly Mock<IRequestBuilder> _requestBuilderMock;
 
-        public MarsDescentImagerTests()
+        public MiniatureThermalEmissionSpectrometerTests()
         {
             _requestBuilderMock = new Mock<IRequestBuilder>();
 
@@ -20,21 +20,21 @@ namespace NASA.Api.Tests
                     .Setup(m => m.AddQueryParameter("camera", It.IsAny<string>()))
                     .Returns(_requestBuilderMock.Object);
 
-            _camera = new MarsDescentImager(_requestBuilderMock.Object);
+            _camera = new MiniatureThermalEmissionSpectrometer(_requestBuilderMock.Object);
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void HasName()
         {
-            Assert.Equal("Mars Descent Imager", _camera.Name);
+            Assert.Equal("Miniature Thermal Emission Spectrometer (Mini-TES)", _camera.Name);
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void HasAbbreviation()
         {
-            Assert.Equal("MARDI", _camera.Abbreviation);
+            Assert.Equal("MINITES", _camera.Abbreviation);
         }
 
         [Fact]

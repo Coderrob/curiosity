@@ -1,4 +1,5 @@
-﻿using NASA.Api.Utilities;
+﻿using NASA.Api.Tests.Helpers;
+using NASA.Api.Utilities;
 using Newtonsoft.Json;
 using Xunit;
 

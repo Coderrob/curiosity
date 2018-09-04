@@ -15,7 +15,8 @@ namespace NASA.Api.Utilities
 
         public RequestBuilder(string baseUrl)
         {
-            if (string.IsNullOrEmpty(baseUrl)) throw new ArgumentNullException(nameof(baseUrl));
+            if (string.IsNullOrEmpty(baseUrl))
+                throw new ArgumentNullException(nameof(baseUrl));
 
             BaseUrl = baseUrl;
             RequestUrl = new Url(baseUrl);

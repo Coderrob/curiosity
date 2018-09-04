@@ -5,7 +5,7 @@ using NASA.Api.Cameras;
 using NASA.Api.Utilities;
 using Xunit;
 
-namespace NASA.Api.Tests
+namespace NASA.Api.Tests.Cameras
 {
     public class ChemistryAndCameraComplexTests
     {

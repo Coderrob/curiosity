@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NASA.PhotoImporter
+namespace NASA.PhotoImporter.Importers
 {
     public interface IDateImporter
     {

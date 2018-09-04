@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using NASA.Api.Cameras;
 using NASA.Api.Utilities;
 
+[assembly: InternalsVisibleTo("NASA.Api.Tests")]
+
 namespace NASA.Api.Rovers
 {
-    public class Spirit : Rover
+    internal class Spirit : Rover
     {
         public override string Name => "Spirit";
 

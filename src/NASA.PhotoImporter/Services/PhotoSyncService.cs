@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Flurl.Http;
+using NASA.PhotoImporter.Importers;
 using NLog;
 
-namespace NASA.PhotoImporter
+[assembly: InternalsVisibleTo("NASA.PhotoImporter.Tests")]
+
+namespace NASA.PhotoImporter.Services
 {
-    public class PhotoSyncService
+    internal class PhotoSyncService
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         private readonly IDateImporter _dateImporter;
@@ -22,11 +26,11 @@ namespace NASA.PhotoImporter
             _photoImporter = photoImporter ?? throw new ArgumentNullException(nameof(photoImporter));
         }
 
-        public async Task Export(string path)
+        public async Task Export(string directoryPath)
         {
             try
             {
-                var directory = EnsureDirectoryPath(path);
+                var directory = EnsureDirectoryPath(directoryPath);
 
                 foreach (var date in await GetDates())
                 {
@@ -34,34 +38,51 @@ namespace NASA.PhotoImporter
 
                     foreach (var photoUrl in await GetPhotos(date))
                     {
-                        if (string.IsNullOrEmpty(photoUrl))
-                            continue;
-
-                        var fileName = GetImageFileNameFromSourceUrl(photoUrl);
-
-                        if (!fileName.IsSupportedImage())
-                        {
-                            Logger.Info($"File '{fileName}' file type is not supported.");
-                            continue;
-                        }
-
-                        await photoUrl.DownloadFileAsync(outputDirectory, fileName);
+                        await DownloadPhoto(outputDirectory, photoUrl);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, $"Failed exporting photos to '{path}'. Error: {ex.Message}");
+                var message = $"Failed exporting photos to '{directoryPath}'.";
+                Logger.Error(ex, $"{message} Error: {ex.Message}");
+                throw new Exception(message, ex);
             }
         }
 
-        public string GetImageFileNameFromSourceUrl(string value)
+        public async Task DownloadPhoto(string outputPath, string photoUrl)
         {
-            if (string.IsNullOrEmpty(value)) return string.Empty;
+            if (string.IsNullOrEmpty(photoUrl))
+                return;
 
-            return value.ToLower()
-                        .Split('/')
-                        .Last();
+            if (string.IsNullOrEmpty(outputPath))
+                return;
+
+            try
+            {
+                var fileName = GetFileNameFromPhotoSourceUrl(photoUrl);
+
+                if (!fileName.IsSupportedImage())
+                {
+                    Logger.Info($"File '{fileName}' file type is not supported.");
+                    return;
+                }
+
+                await photoUrl.DownloadFileAsync(outputPath, fileName);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"Failed to download to folder '{outputPath}' the requested photo '{photoUrl}'. {ex.Message}");
+            }
+        }
+
+        public string GetFileNameFromPhotoSourceUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return string.Empty;
+
+            return Uri.TryCreate(url, UriKind.Absolute, out var uri)
+                    ? uri.Segments.LastOrDefault()?.ToLower() ?? string.Empty
+                    : string.Empty;
         }
 
         public async Task<IEnumerable<DateTime>> GetDates()
@@ -97,7 +118,7 @@ namespace NASA.PhotoImporter
             }
             catch (Exception ex)
             {
-                var message = $"Failed to ensure directory path '{folderPath}' exists.";
+                var message = $"Failed to ensure directory directoryPath '{folderPath}' exists.";
                 Logger.Error(ex, $"{message} Error: {ex.Message}");
                 throw new Exception(message);
             }

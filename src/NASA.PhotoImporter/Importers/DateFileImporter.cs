@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using NLog;
 
-namespace NASA.PhotoImporter
+[assembly: InternalsVisibleTo("NASA.PhotoImporter.Tests")]
+
+namespace NASA.PhotoImporter.Importers
 {
-    public class DateImporter : IDateImporter
+    internal class DateFileImporter : IDateImporter
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         private readonly string _filePath;
 
-        public DateImporter(string filePath)
+        public DateFileImporter(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentNullException(nameof(filePath));
 
             if (!File.Exists(filePath))
-                throw new Exception($"File not found at specified path '{filePath}'.");
+                throw new FileNotFoundException();
 
             _filePath = filePath;
         }
