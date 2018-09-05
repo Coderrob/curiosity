@@ -10,10 +10,10 @@ The Mars rover photo import utility is a .Net Core CLI application that allows f
 
 ## Table of Contents
 
-- [Expected Date File Format](#ExpectedDateFileFormat)
-- [Examples](#Examples)
-- [Built With](#BuiltWith)
-- [License](#License)
+- [Expected Date File Format](#-expected-date-file-format)
+- [Examples](#-examples)
+- [Built With](#-built-with)
+- [License](#-license)
 
 ## <a href="ExpectedDateFileFormat"></a> Expected Date File Format
 

@@ -8,9 +8,9 @@ Before getting started please refer to the [NASA API Getting Started Guide](http
 
 ## Table of Contents
 
-- [Examples](#Examples)
-- [Built With](#BuiltWith)
-- [License](#License)
+- [Examples](#-examples)
+- [Built With](#-built-with)
+- [License](#-license)
 
 ## <a name="Examples"></a> Examples
 
