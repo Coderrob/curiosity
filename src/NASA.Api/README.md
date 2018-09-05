@@ -12,7 +12,7 @@ Before getting started please refer to the [NASA API Getting Started Guide](http
 - [Built With](#BuiltWith)
 - [License](#License)
 
-## Examples
+## <a name="Examples"></a> Examples
 
 ### Get All Mars Rovers
 
@@ -101,13 +101,13 @@ Want to see more examples? Please feel free to contribute!
 
 // TODO
 
-## Built With
+## <a href="BuiltWith"></a> Built With
 
 - [.Net Core](https://docs.microsoft.com/en-us/dotnet/core/) - The .Net framework used
 - [Flurl](https://github.com/tmenier/Flurl) - The web client used
 - [NLog](https://nlog-project.org) - The logging library used
 - [NASA Rover Api](https://api.nasa.gov/api.html#MarsPhotos) - NASA rover photos api
 
-## License
+## <a href="License"></a> License
 
 This project is licensed under the GNU License - see the [LICENSE.md](LICENSE.md) file for details
