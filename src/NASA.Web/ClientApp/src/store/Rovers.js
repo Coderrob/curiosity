@@ -1,11 +1,11 @@
 const requestRoverPhotosType = "REQUEST_ROVER_PHOTOS";
 const receiveRoverPhotosType = "RECEIVE_ROVER_PHOTOS";
-const initialState = { earthDate: "", photos: [], isLoading: false };
+const initialState = { date: '', photos: [], isLoading: false };
 
 export const actionCreators = {
-  requestRoverPhotos: (name, earthDate) => async (dispatch, getState) => {
+  requestRoverPhotos: (name, date) => async (dispatch, getState) => {
     if (
-      earthDate === getState().rovers.earthDate &&
+      date === getState().rovers.date &&
       name === getState().rovers.name
     ) {
       return;
@@ -14,17 +14,17 @@ export const actionCreators = {
     dispatch({
       type: requestRoverPhotosType,
       name: name || "",
-      earthDate: earthDate || ""
+      date: date || ""
     });
 
-    const url = earthDate
-      ? `api/rover/${name}/${earthDate}`
+    const url = date
+      ? `api/rover/${name}/${date}`
       : `api/rover/${name}`;
 
     const response = await fetch(url);
     const photos = await response.json();
 
-    dispatch({ type: receiveRoverPhotosType, name, earthDate, photos });
+    dispatch({ type: receiveRoverPhotosType, name, date, photos });
   }
 };
 
@@ -35,7 +35,7 @@ export const reducer = (state, action) => {
     return {
       ...state,
       name: action.name,
-      earthDate: action.earthDate,
+      date: action.date,
       isLoading: true
     };
   }
@@ -44,7 +44,7 @@ export const reducer = (state, action) => {
     return {
       ...state,
       name: action.name,
-      earthDate: action.earthDate,
+      date: action.date,
       photos: action.photos,
       isLoading: false
     };
