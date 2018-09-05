@@ -32,7 +32,6 @@ namespace NASA.Api.Tests.Utilities
         public void ReturnsBaseUrl()
         {
             var builder = new RequestBuilder(_testUrl);
-            Assert.Equal(_testUrl, builder.BaseUrl);
             Assert.Equal(_testUrl, builder.GetRequest().ToString());
         }
 
@@ -43,7 +42,6 @@ namespace NASA.Api.Tests.Utilities
             var builder = (RequestBuilder) new RequestBuilder(_testUrl)
                     .AddPath("testing");
 
-            Assert.Equal(_testUrl, builder.BaseUrl);
             Assert.Equal($"{_testUrl}/testing", builder.GetRequest().ToString());
         }
 
@@ -55,7 +53,6 @@ namespace NASA.Api.Tests.Utilities
                                            .AddPath("testing")
                                            .AddQueryParameter("test", "true");
 
-            Assert.Equal(_testUrl, builder.BaseUrl);
             Assert.Equal($"{_testUrl}/testing?test=true", builder.GetRequest().ToString());
         }
 
@@ -67,7 +64,6 @@ namespace NASA.Api.Tests.Utilities
                                            .AddQueryParameter("test", "true")
                                            .AddPath("testing");
 
-            Assert.Equal(_testUrl, builder.BaseUrl);
             Assert.Equal($"{_testUrl}/testing?test=true", builder.GetRequest().ToString());
         }
 

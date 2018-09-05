@@ -23,10 +23,6 @@ namespace NASA.Api.Tests.Rovers
                     .Setup(m => m.AddPath("Opportunity"))
                     .Returns(_requestBuilderMock.Object);
 
-            _requestBuilderMock
-                    .Setup(m => m.Clone())
-                    .Returns(_requestBuilderMock.Object);
-
             _rover = new Opportunity(_requestBuilderMock.Object);
         }
 

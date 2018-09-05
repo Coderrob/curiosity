@@ -20,9 +20,7 @@ namespace NASA.Api.Rovers
 
         internal Rover(IRequestBuilder requestBuilder)
         {
-            RequestBuilder = requestBuilder
-                             .Clone()
-                             .AddPath(Name);
+            RequestBuilder = requestBuilder.AddPath(Name);
         }
 
         public abstract string Name { get; }

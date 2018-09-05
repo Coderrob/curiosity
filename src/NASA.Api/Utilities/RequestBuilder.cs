@@ -10,49 +10,51 @@ namespace NASA.Api.Utilities
 {
     internal class RequestBuilder : IRequestBuilder
     {
-        private Url RequestUrl { get; set; }
-        public string BaseUrl { get; }
+        private readonly string _baseUrl;
+        private readonly Url _requestUrl;
 
         public RequestBuilder(string baseUrl)
         {
             if (string.IsNullOrEmpty(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
 
-            BaseUrl = baseUrl;
-            RequestUrl = new Url(baseUrl);
+            _baseUrl = baseUrl;
+            _requestUrl = new Url(baseUrl);
+        }
+
+        private RequestBuilder(string baseUrl, Url requestUrl)
+        {
+            _requestUrl = requestUrl;
+            _baseUrl = baseUrl;
         }
 
         public IRequestBuilder Clone()
         {
-            return new RequestBuilder(RequestUrl.ToString());
+            return new RequestBuilder(_requestUrl.ToString());
         }
 
         public IRequestBuilder AddQueryParameter(string name, string value)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(value))
-                return this;
-
-            RequestUrl = RequestUrl.SetQueryParam(name, value);
-            return this;
+            return string.IsNullOrEmpty(name) || string.IsNullOrEmpty(value)
+                    ? new RequestBuilder(_baseUrl, _requestUrl)
+                    : new RequestBuilder(_baseUrl, _requestUrl.SetQueryParam(name, value));
         }
 
         public IRequestBuilder AddPath(string pathName)
         {
-            if (string.IsNullOrEmpty(pathName))
-                return this;
-
-            RequestUrl = RequestUrl.AppendPathSegment(pathName);
-            return this;
+            return string.IsNullOrEmpty(pathName)
+                    ? new RequestBuilder(_baseUrl, _requestUrl)
+                    : new RequestBuilder(_baseUrl, _requestUrl.AppendPathSegment(pathName));
         }
 
         public async Task<T> MakeRequest<T>()
         {
-            return await RequestUrl.GetJsonAsync<T>();
+            return await _requestUrl.GetJsonAsync<T>();
         }
 
         public Url GetRequest()
         {
-            return RequestUrl;
+            return _requestUrl;
         }
     }
 }

@@ -23,10 +23,6 @@ namespace NASA.Api.Tests.Rovers
                     .Setup(m => m.AddPath("Curiosity"))
                     .Returns(_requestBuilderMock.Object);
 
-            _requestBuilderMock
-                    .Setup(m => m.Clone())
-                    .Returns(_requestBuilderMock.Object);
-
             _rover = new Curiosity(_requestBuilderMock.Object);
         }
 

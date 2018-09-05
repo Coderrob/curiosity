@@ -17,10 +17,6 @@ namespace NASA.Api.Tests.Cameras
             _requestBuilderMock = new Mock<IRequestBuilder>();
 
             _requestBuilderMock
-                    .Setup(m => m.Clone())
-                    .Returns(_requestBuilderMock.Object);
-
-            _requestBuilderMock
                     .Setup(m => m.AddQueryParameter("camera", It.IsAny<string>()))
                     .Returns(_requestBuilderMock.Object);
 
