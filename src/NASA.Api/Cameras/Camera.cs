@@ -14,7 +14,9 @@ namespace NASA.Api.Cameras
 
         protected Camera(IRequestBuilder requestBuilder)
         {
-            RequestBuilder = requestBuilder.AddQueryParameter("camera", Abbreviation);
+            RequestBuilder = requestBuilder
+                             .Clone()
+                             .AddQueryParameter("camera", Abbreviation);
         }
 
         public abstract string Name { get; }

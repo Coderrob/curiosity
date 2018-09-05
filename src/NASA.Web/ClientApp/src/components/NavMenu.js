@@ -8,7 +8,7 @@ export default props => (
   <Navbar inverse fixedTop fluid collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to={'/'}>NASA.Web</Link>
+        <Link to={'/'}>NASA Rover Photos</Link>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
@@ -19,14 +19,19 @@ export default props => (
             <Glyphicon glyph='home' /> Home
           </NavItem>
         </LinkContainer>
-        <LinkContainer to={'/counter'}>
+        <LinkContainer to={'/curiosity'}>
           <NavItem>
-            <Glyphicon glyph='education' /> Counter
+            <Glyphicon glyph='camera' /> Curiosity
           </NavItem>
         </LinkContainer>
-        <LinkContainer to={'/fetchdata'}>
+        <LinkContainer to={'/oppurtunity'}>
           <NavItem>
-            <Glyphicon glyph='th-list' /> Fetch data
+            <Glyphicon glyph='camera' /> Oppurtunity
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer to={'/spirit'}>
+          <NavItem>
+            <Glyphicon glyph='camera' /> Spirit
           </NavItem>
         </LinkContainer>
       </Nav>

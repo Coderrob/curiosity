@@ -17,6 +17,7 @@ namespace NASA.Api.Utilities
             try
             {
                 var response = await builder
+                                     .Clone()
                                      .AddPath("photos")
                                      .AddQueryParameter("earth_date", date.ToEarthDateString())
                                      .MakeRequest<PhotosResponse>();

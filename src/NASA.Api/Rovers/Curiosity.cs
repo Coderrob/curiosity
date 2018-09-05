@@ -15,13 +15,13 @@ namespace NASA.Api.Rovers
         {
             Cameras = new List<ICamera>
             {
-                new FrontHazardAvoidanceCamera(RequestBuilder.Clone()),
-                new RearHazardAvoidanceCamera(RequestBuilder.Clone()),
-                new MastCamera(RequestBuilder.Clone()),
-                new ChemistryAndCameraComplex(RequestBuilder.Clone()),
-                new MarsHandLensImager(RequestBuilder.Clone()),
-                new MarsDescentImager(RequestBuilder.Clone()),
-                new NavigationCamera(RequestBuilder.Clone())
+                new FrontHazardAvoidanceCamera(RequestBuilder),
+                new RearHazardAvoidanceCamera(RequestBuilder),
+                new MastCamera(RequestBuilder),
+                new ChemistryAndCameraComplex(RequestBuilder),
+                new MarsHandLensImager(RequestBuilder),
+                new MarsDescentImager(RequestBuilder),
+                new NavigationCamera(RequestBuilder)
             };
         }
     }
