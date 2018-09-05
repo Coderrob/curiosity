@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using NASA.Api.Cameras;
 using NASA.Api.Utilities;
 
+[assembly: InternalsVisibleTo("NASA.Api.Tests")]
+
 namespace NASA.Api.Rovers
 {
-    public class Curiosity : Rover
+    internal class Curiosity : Rover
     {
         public override string Name => "Curiosity";
 
@@ -12,13 +15,13 @@ namespace NASA.Api.Rovers
         {
             Cameras = new List<ICamera>
             {
-                new FrontHazardAvoidanceCamera(RequestBuilder.Clone()),
-                new RearHazardAvoidanceCamera(RequestBuilder.Clone()),
-                new MastCamera(RequestBuilder.Clone()),
-                new ChemistryAndCameraComplex(RequestBuilder.Clone()),
-                new MarsHandLensImager(RequestBuilder.Clone()),
-                new MarsDescentImager(RequestBuilder.Clone()),
-                new NavigationCamera(RequestBuilder.Clone())
+                new FrontHazardAvoidanceCamera(RequestBuilder),
+                new RearHazardAvoidanceCamera(RequestBuilder),
+                new MastCamera(RequestBuilder),
+                new ChemistryAndCameraComplex(RequestBuilder),
+                new MarsHandLensImager(RequestBuilder),
+                new MarsDescentImager(RequestBuilder),
+                new NavigationCamera(RequestBuilder)
             };
         }
     }

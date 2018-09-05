@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using NASA.PhotoImporter.Importers;
 using Xunit;
 
 namespace NASA.PhotoImporter.Tests
@@ -24,30 +25,30 @@ namespace NASA.PhotoImporter.Tests
 
         [Fact]
         [Trait("Category", "Unit")]
-        public void ThrowsExceptionIfFileNameIsNull()
+        public void ThrowsArgumentNullExceptionIfFileNameIsNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new DateImporter(null));
+            Assert.Throws<ArgumentNullException>(() => new DateFileImporter(null));
         }
 
         [Fact]
         [Trait("Category", "Unit")]
-        public void ThrowsExceptionIfFileDoesNotExist()
+        public void ThrowsFileNotFoundExceptionIfFileDoesNotExist()
         {
-            Assert.Throws<Exception>(() => new DateImporter($"{Guid.NewGuid():D}.txt"));
+            Assert.Throws<FileNotFoundException>(() => new DateFileImporter($"{Guid.NewGuid():D}.txt"));
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void CanCreateImporter()
         {
-            Assert.NotNull(new DateImporter(_testFilePath));
+            Assert.NotNull(new DateFileImporter(_testFilePath));
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public async Task CanGetDatesFromFile()
         {
-            var importer = new DateImporter(_testFilePath);
+            var importer = new DateFileImporter(_testFilePath);
 
             Assert.NotEmpty(await importer.GetDates());
         }
@@ -56,7 +57,7 @@ namespace NASA.PhotoImporter.Tests
         [Trait("Category", "Unit")]
         public async Task HasExpectedDatesFromFile()
         {
-            var importer = new DateImporter(_testFilePath);
+            var importer = new DateFileImporter(_testFilePath);
 
             var dates = await importer.GetDates();
 

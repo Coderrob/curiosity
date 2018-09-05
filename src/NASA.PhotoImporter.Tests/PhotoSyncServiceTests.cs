@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Flurl.Http.Testing;
 using Moq;
+using NASA.PhotoImporter.Importers;
+using NASA.PhotoImporter.Services;
 using Xunit;
 
 namespace NASA.PhotoImporter.Tests
@@ -49,7 +52,7 @@ namespace NASA.PhotoImporter.Tests
         [Trait("Category", "Unit")]
         public void GetFileNameFromSourceUrlReturnsEmpty()
         {
-            Assert.Equal(string.Empty, _service.GetImageFileNameFromSourceUrl(null));
+            Assert.Equal(string.Empty, _service.GetFileNameFromPhotoSourceUrl(null));
         }
 
         [Fact]
@@ -59,7 +62,7 @@ namespace NASA.PhotoImporter.Tests
             var url = "http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01004/opgs/edr/fcam/FLB_486615455EDR_F0481570FHAZ00323M_.JPG";
             var fileName = "FLB_486615455EDR_F0481570FHAZ00323M_.JPG".ToLower();
 
-            Assert.Equal(fileName, _service.GetImageFileNameFromSourceUrl(url));
+            Assert.Equal(fileName, _service.GetFileNameFromPhotoSourceUrl(url));
         }
 
         [Fact]
@@ -97,8 +100,114 @@ namespace NASA.PhotoImporter.Tests
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
+        public async Task DownloadPhotoHandlesNullOutputPath()
+        {
+            await _service.DownloadPhoto(null, "file.jpg");
+        }
+
+        [Fact]
+        public async Task DownloadPhotoHandlesNullPhotoUrl()
+        {
+            await _service.DownloadPhoto("folder", null);
+        }
+
+        [Fact]
+        public async Task DownloadPhotoHandlesInvalidImageTypes()
+        {
+            await _service.DownloadPhoto("folder", "hacker.exe");
+        }
+
+        [Fact]
+        public async Task DownloadPhotoHandlesFailedDownloadResponse()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                httpTest.RespondWith(status: 500);
+
+                await _service.DownloadPhoto("folder", "file.jpg");
+            }
+        }
+
+        [Fact]
+        public async Task GetDatesReturnsNull()
+        {
+            _dateImporterMock
+                    .Setup(m => m.GetDates())
+                    .ReturnsAsync((IEnumerable<DateTime>) null);
+
+            Assert.Empty(await _service.GetDates());
+        }
+
+        [Fact]
+        public async Task GetDatesReturnsDates()
+        {
+            _dateImporterMock
+                    .Setup(m => m.GetDates())
+                    .ReturnsAsync(new List<DateTime>
+                    {
+                        DateTime.Now
+                    });
+
+            Assert.Single(await _service.GetDates());
+        }
+
+        [Fact]
+        public async Task GetDatesReturnsDistinctDates()
+        {
+            var date = new DateTime(2015, 6, 3);
+
+            _dateImporterMock
+                    .Setup(m => m.GetDates())
+                    .ReturnsAsync(new List<DateTime>
+                    {
+                        date,
+                        date
+                    });
+
+            Assert.Single(await _service.GetDates());
+        }
+
+        [Fact]
+        public async Task GetPhotosReturnsNull()
+        {
+            _photoImporterMock
+                    .Setup(m => m.GetPhotos(It.IsAny<DateTime>()))
+                    .ReturnsAsync((IEnumerable<string>) null);
+
+            Assert.Empty(await _service.GetDates());
+        }
+
+        [Fact]
+        public async Task GetPhotosReturnsPhotos()
+        {
+            _photoImporterMock
+                    .Setup(m => m.GetPhotos(It.IsAny<DateTime>()))
+                    .ReturnsAsync(new List<string>
+                    {
+                        "testing.jpg"
+                    });
+
+            Assert.Single(await _service.GetPhotos(DateTime.Now));
+        }
+
+        [Fact]
+        public async Task GetPhotosReturnsDistinctPhotos()
+        {
+            _photoImporterMock
+                    .Setup(m => m.GetPhotos(It.IsAny<DateTime>()))
+                    .ReturnsAsync(new List<string>
+                    {
+                        "testing.jpg",
+                        "testing.jpg"
+                    });
+
+            Assert.Single(await _service.GetPhotos(DateTime.Now));
+        }
+
+        [Fact]
         [Trait("Category", "Integration")]
-        public async Task CanExport()
+        public async Task CanExportFromNASA()
         {
             var testDate = new DateTime(2018, 1, 1);
             var testImage = "http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01004/opgs/edr/fcam/FLB_486615455EDR_F0481570FHAZ00323M_.JPG";
