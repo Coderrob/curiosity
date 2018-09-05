@@ -37,14 +37,14 @@ namespace NASA.Api.Utilities
         {
             return string.IsNullOrEmpty(name) || string.IsNullOrEmpty(value)
                     ? new RequestBuilder(_baseUrl, _requestUrl)
-                    : new RequestBuilder(_baseUrl, _requestUrl.SetQueryParam(name, value));
+                    : new RequestBuilder(_baseUrl, _requestUrl.ToString().SetQueryParam(name, value));
         }
 
         public IRequestBuilder AddPath(string pathName)
         {
             return string.IsNullOrEmpty(pathName)
                     ? new RequestBuilder(_baseUrl, _requestUrl)
-                    : new RequestBuilder(_baseUrl, _requestUrl.AppendPathSegment(pathName));
+                    : new RequestBuilder(_baseUrl, _requestUrl.ToString().AppendPathSegment(pathName));
         }
 
         public async Task<T> MakeRequest<T>()

@@ -73,7 +73,7 @@ namespace NASA.Api.Tests.Utilities
         {
             var builder = new RequestBuilder(_testUrl);
             var builderCopy = builder.Clone();
-            builder.AddPath("testing");
+            builder = (RequestBuilder) builder.AddPath("testing");
 
             Assert.Equal(_testUrl, (builderCopy as RequestBuilder)?.GetRequest().ToString());
             Assert.Equal($"{_testUrl}/testing", builder.GetRequest().ToString());
@@ -109,7 +109,7 @@ namespace NASA.Api.Tests.Utilities
         {
             using (var httpTest = new HttpTest())
             {
-                httpTest.RespondWithJson(body: JsonConvert.DeserializeObject(data));
+                httpTest.RespondWithJson(JsonConvert.DeserializeObject(data));
 
                 var builder = new RequestBuilder(_testUrl);
 
