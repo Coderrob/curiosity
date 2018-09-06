@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Xunit;
 
 namespace NASA.Api.Tests
@@ -32,6 +33,13 @@ namespace NASA.Api.Tests
         public void ClientThrowsExceptionWithNullBaseUrl()
         {
             Assert.Throws<ArgumentNullException>(() => { new RoverClient(null, "ApiKeyValue"); });
+        }
+
+        [Fact]
+        public void GetRoversReturnsThreeRovers()
+        {
+            var client = new RoverClient();
+            Assert.Equal(3, client.GetRovers().Count());
         }
     }
 }

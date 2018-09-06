@@ -32,7 +32,9 @@ namespace NASA.Api
 
             Rovers = new List<IRover>
             {
-                new Curiosity(requestBuilder)
+                new Curiosity(requestBuilder),
+                new Opportunity(requestBuilder),
+                new Spirit(requestBuilder)
             };
         }
 
