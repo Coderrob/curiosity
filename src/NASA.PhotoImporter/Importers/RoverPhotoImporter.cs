@@ -66,7 +66,7 @@ namespace NASA.PhotoImporter.Importers
             if (photos == null)
                 return Enumerable.Empty<string>();
 
-            return photos.Select(p => p.Source?.ToLower())
+            return photos.Select(p => p.Source)
                          .Where(s => !string.IsNullOrEmpty(s))
                          .ToList();
         }
