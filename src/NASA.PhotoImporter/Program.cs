@@ -13,7 +13,7 @@ namespace NASA.PhotoImporter
 
         public static void Main(string[] args)
         {
-            var showHelp = true;
+            var showHelp = false;
             string outputPath = null;
             string inputFile = null;
             string apiKey = null;
