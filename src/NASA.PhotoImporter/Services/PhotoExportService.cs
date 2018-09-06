@@ -6,19 +6,20 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Flurl.Http;
 using NASA.PhotoImporter.Importers;
+using NASA.PhotoImporter.Utilities;
 using NLog;
 
 [assembly: InternalsVisibleTo("NASA.PhotoImporter.Tests")]
 
 namespace NASA.PhotoImporter.Services
 {
-    internal class PhotoSyncService
+    internal class PhotoExportService : IExportService
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         private readonly IDateImporter _dateImporter;
         private readonly IPhotoImporter _photoImporter;
 
-        public PhotoSyncService(
+        public PhotoExportService(
             IDateImporter dateImporter,
             IPhotoImporter photoImporter)
         {

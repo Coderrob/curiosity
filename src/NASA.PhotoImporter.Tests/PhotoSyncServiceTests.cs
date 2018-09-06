@@ -14,13 +14,13 @@ namespace NASA.PhotoImporter.Tests
     {
         private readonly Mock<IDateImporter> _dateImporterMock;
         private readonly Mock<IPhotoImporter> _photoImporterMock;
-        private readonly PhotoSyncService _service;
+        private readonly PhotoExportService _service;
 
         public PhotoSyncServiceTests()
         {
             _dateImporterMock = new Mock<IDateImporter>();
             _photoImporterMock = new Mock<IPhotoImporter>();
-            _service = new PhotoSyncService(
+            _service = new PhotoExportService(
                 _dateImporterMock.Object,
                 _photoImporterMock.Object);
         }
@@ -29,7 +29,7 @@ namespace NASA.PhotoImporter.Tests
         [Trait("Category", "Unit")]
         public void CanCreateService()
         {
-            Assert.NotNull(new PhotoSyncService(
+            Assert.NotNull(new PhotoExportService(
                 _dateImporterMock.Object,
                 _photoImporterMock.Object));
         }
@@ -38,14 +38,14 @@ namespace NASA.PhotoImporter.Tests
         [Trait("Category", "Unit")]
         public void ThrowsExceptionIfDateImporterIsNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new PhotoSyncService(null, _photoImporterMock.Object));
+            Assert.Throws<ArgumentNullException>(() => new PhotoExportService(null, _photoImporterMock.Object));
         }
 
         [Fact]
         [Trait("Category", "Unit")]
         public void ThrowsExceptionIfPhotoImporterIsNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new PhotoSyncService(_dateImporterMock.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new PhotoExportService(_dateImporterMock.Object, null));
         }
 
         [Fact]

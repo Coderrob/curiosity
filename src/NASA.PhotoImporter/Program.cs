@@ -20,10 +20,10 @@ namespace NASA.PhotoImporter
 
             var p = new OptionSet
             {
+                { "h|help", "show this message and exit", v => showHelp = v != null },
                 { "i=", "Input date file", v => inputFile = v },
                 { "o=", "Output directory", v => outputPath = v },
-                { "k|key=", "NASA API key", k => apiKey = k },
-                { "h|help", "show this message and exit", v => showHelp = v != null }
+                { "k|key=", "NASA API key", k => apiKey = k },                
             };
 
             try
@@ -40,7 +40,7 @@ namespace NASA.PhotoImporter
                 if (string.IsNullOrEmpty(outputPath)) throw new OptionException("Missing required option -o", "Output directory.");
                 if (string.IsNullOrEmpty(apiKey)) throw new OptionException("Missing required option -k=key", "NASA API Key");
 
-                var service = new PhotoSyncService(
+                var service = new PhotoExportService(
                     new DateFileImporter(inputFile),
                     new RoverPhotoImporter(
                         new RoverClient(apiKey)));

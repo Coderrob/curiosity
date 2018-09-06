@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace NASA.PhotoImporter
+namespace NASA.PhotoImporter.Utilities
 {
     public static class FileNameExtensions
     {
